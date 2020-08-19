@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharmacy2URyanMoir", "Pharm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharmacy2UClient", "Pharmacy2UClient\Pharmacy2UClient.csproj", "{C30F4699-7E87-46EE-A31D-5A261AC6A438}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApiTests", "RestApiTests\RestApiTests.csproj", "{5C501B09-260A-41A0-962E-C659A242ED84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C30F4699-7E87-46EE-A31D-5A261AC6A438}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C30F4699-7E87-46EE-A31D-5A261AC6A438}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C30F4699-7E87-46EE-A31D-5A261AC6A438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C501B09-260A-41A0-962E-C659A242ED84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C501B09-260A-41A0-962E-C659A242ED84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C501B09-260A-41A0-962E-C659A242ED84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C501B09-260A-41A0-962E-C659A242ED84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
