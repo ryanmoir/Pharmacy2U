@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharmacy2URyanMoir", "Pharmacy2URyanMoir\Pharmacy2URyanMoir.csproj", "{CEAE0A1A-FCDB-45C0-A624-4E2C60EA6CB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharmacy2URyanMoir", "Pharmacy2URyanMoir\Pharmacy2URyanMoir.csproj", "{CEAE0A1A-FCDB-45C0-A624-4E2C60EA6CB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharmacy2UClient", "Pharmacy2UClient\Pharmacy2UClient.csproj", "{C30F4699-7E87-46EE-A31D-5A261AC6A438}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pharmacy2UClient", "Pharmacy2UClient\Pharmacy2UClient.csproj", "{C30F4699-7E87-46EE-A31D-5A261AC6A438}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

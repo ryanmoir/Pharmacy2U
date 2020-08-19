@@ -8,7 +8,7 @@ using Pharmacy2URyanMoir.Models;
 
 namespace Pharmacy2URyanMoir.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CurrenciesController : ControllerBase
     {
@@ -21,6 +21,7 @@ namespace Pharmacy2URyanMoir.Controllers
 
         // GET: api/Currencies
         [HttpGet]
+        [ActionName("AllCurrencies")]
         public async Task<ActionResult<IEnumerable<Currencies>>> GetCurrencies()
         {
             return await _context.Currencies.ToListAsync();
@@ -28,54 +29,24 @@ namespace Pharmacy2URyanMoir.Controllers
 
         // GET: api/Currencies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Currencies>> GetCurrencies(int id)
+        [ActionName("CurrencyName")]
+        public async Task<ActionResult<Currencies>> GetCurrencies(string currencyName)
         {
-            var currencies = await _context.Currencies.FindAsync(id);
+            var query = await _context.Currencies
+                .Where(s => s.Name == currencyName)
+                .FirstOrDefaultAsync();
 
-            if (currencies == null)
+            if (query == null)
             {
                 return NotFound();
             }
 
-            return currencies;
-        }
-
-        // PUT: api/Currencies/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurrencies(int id, Currencies currencies)
-        {
-            if (id != currencies.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(currencies).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CurrenciesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+            return query;
+        }      
 
         // POST: api/Currencies
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [ActionName("AddCurrency")]
         public async Task<ActionResult<Currencies>> PostCurrencies(Currencies currencies)
         {
             _context.Currencies.Add(currencies);
@@ -86,6 +57,7 @@ namespace Pharmacy2URyanMoir.Controllers
 
         // DELETE: api/Currencies/5
         [HttpDelete("{id}")]
+        [ActionName("DeleteCurrency")]
         public async Task<ActionResult<Currencies>> DeleteCurrencies(int id)
         {
             var currencies = await _context.Currencies.FindAsync(id);
