@@ -15,7 +15,7 @@ namespace Pharmacy2URyanMoir.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Exponent = table.Column<int>(nullable: false),
                     Symbol = table.Column<string>(maxLength: 10, nullable: false),
-                    Name = table.Column<string>(type: "ntext", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
