@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace RestApiTests
 {
-    public class CurrenciesControllerTests
+    class CurrenciesControllerTests : BaseTests
     {
-        Pharmacy2URyanMoir.Controllers.CurrenciesController currenciesController = new Pharmacy2URyanMoir.Controllers.CurrenciesController();
+        CurrenciesController currenciesController = new CurrenciesController();
 
         public CurrenciesControllerTests()
         {
-            var utilityController = new UtilityController();
-            utilityController.ClearDb();
+            ClearDb();
         }
 
         [Test]
@@ -98,20 +97,6 @@ namespace RestApiTests
             else
             {
                 Assert.Fail();
-            }
-        }
-
-        private async Task AddCurrency(List<Currencies> currencies)
-        {
-            for (int i = 0; i < currencies.Count; i++)
-            {
-                await currenciesController.AddCurrency(currencies[i]);
-
-                var returnedCurrency = await currenciesController.GetCurrencies(currencies[i].Name);
-                if (currencies[i] != returnedCurrency.Value)
-                {
-                    Assert.Fail();
-                }
             }
         }
     }

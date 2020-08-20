@@ -16,9 +16,9 @@ namespace Pharmacy2URyanMoir.Controllers
     {
         private readonly DbSetContext _context;
 
-        public ExchangeRatesController(DbSetContext context)
+        public ExchangeRatesController()
         {
-            _context = context;
+            _context = new DbSetContext();
         }
 
         // GET: api/ExchangeRates/AllExchangeRates
