@@ -101,5 +101,39 @@ namespace RestApiTests
                 Assert.Fail();
             }
         }
+
+        [Test]
+        public async Task TestEditExchangeRate()
+        {
+            var currenciesController = new CurrenciesController();
+            var gbp = await currenciesController.GetCurrencies("GBP");
+            var usd = await currenciesController.GetCurrencies("USD");
+            if (gbp.Value == null || usd.Value == null)
+            {
+                Assert.Fail();
+            }
+
+            var exchangeRateToSend = new ExchangeRates
+            {
+                BaseCurrecncy = gbp.Value.Id,
+                ConvertedCurrency = usd.Value.Id,
+                ExchangeRate = 1
+            };
+            await exchangeRateController.AddExchangeRate(exchangeRateToSend);
+
+            var exchangeRate = await exchangeRateController.GetExchangeRate(gbp.Value.Id, usd.Value.Id);
+            if (exchangeRate.Value != null)
+            {
+                exchangeRate.Value.ExchangeRate = 2;
+
+                await exchangeRateController.UpdateExchangeRate(exchangeRate.Value.Id, exchangeRate.Value);
+                var exchangeRatePostEdit = await exchangeRateController.GetExchangeRate(exchangeRate.Value.Id);
+                if(exchangeRatePostEdit.Value  != null && exchangeRate.Value == exchangeRatePostEdit.Value)
+                {
+                    Assert.Pass();
+                }
+            }
+            Assert.Fail();
+        }
     }
 }
