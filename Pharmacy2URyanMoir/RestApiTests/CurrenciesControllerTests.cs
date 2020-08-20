@@ -17,13 +17,6 @@ namespace RestApiTests
             utilityController.ClearDb();
         }
 
-        /*[SetUp]
-        public void Setup()
-        {
-            var utilityController = new UtilityController();
-            utilityController.ClearDb();
-        }*/
-
         [Test]
         public async Task TestAddCurrency()
         {
@@ -76,6 +69,36 @@ namespace RestApiTests
                 Assert.Pass();
             }
 
+        }
+
+        [Test]
+        public async Task TestDeleteCurrency()
+        {
+            var currencies = await currenciesController.GetCurrencies();
+            if (currencies.Value.Count() == 0)
+            {
+                List<Currencies> currenciesToAdd = new List<Currencies>();
+                currenciesToAdd.Add(new Currencies()
+                {
+                    Exponent = 2,
+                    Symbol = "&",
+                    Name = "TestToDelete"
+                });
+                await AddCurrency(currenciesToAdd);
+
+                currencies = await currenciesController.GetCurrencies();
+            }
+
+            await currenciesController.DeleteCurrencies(currencies.Value.First().Id);
+            var test  = await currenciesController.GetCurrencies(currencies.Value.First().Id);
+            if(test.Value == null)
+            {
+                Assert.Pass();
+            }
+            else
+            {
+                Assert.Fail();
+            }
         }
 
         private async Task AddCurrency(List<Currencies> currencies)

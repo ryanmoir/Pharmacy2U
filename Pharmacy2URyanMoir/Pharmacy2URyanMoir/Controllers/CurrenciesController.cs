@@ -44,6 +44,23 @@ namespace Pharmacy2URyanMoir.Controllers
             return query;
         }
 
+        // GET: api/Currencies/CurrencyId/5
+        [HttpGet("{id}")]
+        [ActionName("CurrencyId")]
+        public async Task<ActionResult<Currencies>> GetCurrencies(int currencyId)
+        {
+            var currency = await _context.Currencies.FindAsync(currencyId);
+            if (currency != null)
+            {
+                return CreatedAtAction("GetCurrencies", new { id = currency.Id }, currency);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+
         // POST: api/Currencies/AddCurrency
         [HttpPost]
         [ActionName("AddCurrency")]
@@ -59,10 +76,9 @@ namespace Pharmacy2URyanMoir.Controllers
         [ActionName("UpdateCurrency")]
         public async Task<ActionResult<Currencies>> UpdateCurrency(Currencies currencies)
         {
-            var task = _context.Currencies.FindAsync(currencies.Id);
-            if(task.IsCompletedSuccessfully && task.Result != null)
+            var currency = await _context.Currencies.FindAsync(currencies.Id);
+            if (currency != null)
             {
-                var currency = task.Result;
                 currency = currencies;
                 await _context.SaveChangesAsync();
                 return CreatedAtAction("GetCurrencies", new { id = currency.Id }, currency);
@@ -89,11 +105,6 @@ namespace Pharmacy2URyanMoir.Controllers
             await _context.SaveChangesAsync();
 
             return currencies;
-        }
-
-        private bool CurrenciesExists(int id)
-        {
-            return _context.Currencies.Any(e => e.Id == id);
         }
     }
 }
