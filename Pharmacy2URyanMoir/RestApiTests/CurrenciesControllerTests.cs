@@ -82,7 +82,7 @@ namespace RestApiTests
             var currencies = await currenciesController.GetCurrencies();
 
             await currenciesController.DeleteCurrencies(currencies.Value.First().Id);
-            var test = await currenciesController.GetCurrencies(currencies.Value.First().Id);
+            var test = await currenciesController.GetCurrencies(currencies.Value.First().Id.ToString());
             if (test.Value == null)
             {
                 Assert.Pass();

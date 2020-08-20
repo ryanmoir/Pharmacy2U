@@ -28,27 +28,49 @@ namespace Pharmacy2URyanMoir.Controllers
         }
 
         // GET: api/Currencies/Currency/5
-        [HttpGet("{id}")]
+        [HttpGet("{arg}")]
         [ActionName("Currency")]
-        public async Task<ActionResult<Currencies>> GetCurrencies(string currencyName)
+        public async Task<ActionResult<Currencies>> GetCurrencies(string arg)
         {
-            var query = await _context.Currencies
-                .Where(s => s.Name == currencyName)
-                .FirstOrDefaultAsync();
-
-            if (query == null)
+            if (arg == null)
             {
                 return NotFound();
             }
 
-            return query;
+            arg = arg.Replace("arg=", "");
+            if (int.TryParse(arg, out var currencyId))
+            {
+                var currency = await _context.Currencies.FindAsync(currencyId);
+                if (currency != null)
+                {
+                    return CreatedAtAction("GetCurrencies", new { id = currency.Id }, currency);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                var query = await _context.Currencies
+                    .Where(s => s.Name == arg)
+                    .FirstOrDefaultAsync();
+
+                if (query == null)
+                {
+                    return NotFound();
+                }
+
+                return query;
+            }
         }
 
         // GET: api/Currencies/CurrencyId/5
-        [HttpGet("{id}")]
+        /*[HttpGet("{id}")]
         [ActionName("CurrencyId")]
-        public async Task<ActionResult<Currencies>> GetCurrencies(int currencyId)
+        public async Task<ActionResult<Currencies>> GetCurrencies(string currencyIdStr)
         {
+            var currencyId = int.Parse(currencyIdStr);
             var currency = await _context.Currencies.FindAsync(currencyId);
             if (currency != null)
             {
@@ -58,7 +80,7 @@ namespace Pharmacy2URyanMoir.Controllers
             {
                 return NotFound();
             }
-        }
+        }*/
 
 
         // POST: api/Currencies/AddCurrency
