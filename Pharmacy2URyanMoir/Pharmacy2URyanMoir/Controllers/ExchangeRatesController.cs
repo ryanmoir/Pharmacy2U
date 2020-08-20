@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pharmacy2URyanMoir.Data;
@@ -44,9 +42,9 @@ namespace Pharmacy2URyanMoir.Controllers
             return exchangeRates;
         }
 
-        // GET: api/ExchangeRates/ExchangeRate/baseCurrency=a&convertedCurrency=b
-        [HttpGet("{id}")]
-        [ActionName("ExchangeRate")]
+        // GET: api/ExchangeRates/ExchangeRateIds/baseCurrency=a&convertedCurrency=b
+        [HttpGet("{baseCurrency}/{convertedCurrency}")]
+        [ActionName("ExchangeRateIds")]
         public async Task<ActionResult<ExchangeRates>> GetExchangeRate(int baseCurrency, int convertedCurrency)
         {
             var query = await _context.ExchangeRates
@@ -58,6 +56,30 @@ namespace Pharmacy2URyanMoir.Controllers
                 return NotFound();
             }
 
+            return query;
+        }
+
+        // GET: api/ExchangeRates/ExchangeRateStrings/baseCurrency=a/convertedCurrency=b
+        [HttpGet("{baseCurrency}/{convertedCurrency}")]
+        [ActionName("ExchangeRateStrings")]
+        public async Task<ActionResult<ExchangeRates>> GetExchangeRate(string baseCurrency, string convertedCurrency)
+        {
+            var currenciesController = new CurrenciesController();
+            var baseCurrencyResult = await currenciesController.GetCurrencies(baseCurrency.Replace("baseCurrency=",""));
+            var convertedCurrencyResult = await currenciesController.GetCurrencies(convertedCurrency.Replace("convertedCurrency=", ""));
+            if (baseCurrencyResult.Value == null || convertedCurrencyResult.Value == null)
+            {
+                return NotFound();
+            }
+
+            var query = await _context.ExchangeRates
+                .Where(s => s.BaseCurrecncy == baseCurrencyResult.Value.Id && s.ConvertedCurrency == convertedCurrencyResult.Value.Id)
+                .FirstOrDefaultAsync();
+
+            if (query == null)
+            {
+                return NotFound();
+            }
             return query;
         }
 
