@@ -19,7 +19,7 @@ namespace Pharmacy2URyanMoir.Controllers
             _context = new DbSetContext();
         }
 
-        // GET: api/Currencies
+        // GET: api/Currencies/AllCurrencies
         [HttpGet]
         [ActionName("AllCurrencies")]
         public async Task<ActionResult<IEnumerable<Currencies>>> GetCurrencies()
@@ -27,9 +27,9 @@ namespace Pharmacy2URyanMoir.Controllers
             return await _context.Currencies.ToListAsync();
         }
 
-        // GET: api/Currencies/5
+        // GET: api/Currencies/Currency/5
         [HttpGet("{id}")]
-        [ActionName("CurrencyName")]
+        [ActionName("Currency")]
         public async Task<ActionResult<Currencies>> GetCurrencies(string currencyName)
         {
             var query = await _context.Currencies
@@ -42,9 +42,9 @@ namespace Pharmacy2URyanMoir.Controllers
             }
 
             return query;
-        }      
+        }
 
-        // POST: api/Currencies
+        // POST: api/Currencies/AddCurrency
         [HttpPost]
         [ActionName("AddCurrency")]
         public async Task<ActionResult<Currencies>> AddCurrency(Currencies currencies)
@@ -54,6 +54,7 @@ namespace Pharmacy2URyanMoir.Controllers
             return CreatedAtAction("GetCurrencies", new { id = currencies.Id }, currencies);
         }
 
+        // POST: api/Currencies/UpdateCurrency
         [HttpPost]
         [ActionName("UpdateCurrency")]
         public async Task<ActionResult<Currencies>> UpdateCurrency(Currencies currencies)
@@ -73,7 +74,7 @@ namespace Pharmacy2URyanMoir.Controllers
             }
         }
 
-        // DELETE: api/Currencies/5
+        // DELETE: api/Currencies/DeleteCurrency/5
         [HttpDelete("{id}")]
         [ActionName("DeleteCurrency")]
         public async Task<ActionResult<Currencies>> DeleteCurrencies(int id)
