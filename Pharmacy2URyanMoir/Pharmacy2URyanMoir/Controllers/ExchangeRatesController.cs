@@ -72,6 +72,30 @@ namespace Pharmacy2URyanMoir.Controllers
             return CreatedAtAction("GetExchangeRates", new { id = exchangeRates.Id }, exchangeRates);
         }
 
+        [HttpPost]
+        [ActionName("AddExchangeRate")]
+        public async Task<ActionResult<ExchangeRates>> AddExchangeRate(string baseCurrency, string convertedCurrency, float exchangeRate)
+        {
+            var currencyController = new CurrenciesController();
+            var baseCurrencyId = await currencyController.GetCurrencies(baseCurrency);
+            var convertedCurrencyId = await currencyController.GetCurrencies(convertedCurrency);
+            if (baseCurrencyId.Value == null || convertedCurrencyId.Value == null)
+            {
+                return NotFound();
+            }
+
+            var exchangeRateObj = new ExchangeRates
+            {
+                BaseCurrecncy = baseCurrencyId.Value.Id,
+                ConvertedCurrency = convertedCurrencyId.Value.Id,
+                ExchangeRate = exchangeRate
+            };
+            _context.ExchangeRates.Add(exchangeRateObj);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetExchangeRates", exchangeRateObj);
+        }
+
         // PUT: api/ExchangeRates/UpdateExchangeRate/5
         [HttpPut("{id}")]
         [ActionName("UpdateExchangeRate")]
