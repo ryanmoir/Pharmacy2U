@@ -50,7 +50,7 @@ namespace RestApiTests
         }
 
         [Test]
-        public async Task TestAddExchangeRate()
+        public async Task TestAddExchangeRateStrings()
         {
             await exchangeRateController.AddExchangeRate("GBP","USD",1);
 
@@ -64,6 +64,35 @@ namespace RestApiTests
 
             var exchangeRate =  await exchangeRateController.GetExchangeRate(gbp.Value.Id, usd.Value.Id);
             if (exchangeRate.Value != null && exchangeRate.Value.BaseCurrecncy == gbp.Value.Id && exchangeRate.Value.ConvertedCurrency == usd.Value.Id)
+            {
+                Assert.Pass();
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [Test]
+        public async Task TestAddExchangeRateIds()
+        {
+            var currenciesController = new CurrenciesController();
+            var gbp = await currenciesController.GetCurrencies("GBP");
+            var usd = await currenciesController.GetCurrencies("USD");
+            if (gbp.Value == null || usd.Value == null)
+            {
+                Assert.Fail();
+            }
+
+            var exchangeRateToSend = new ExchangeRates {
+                BaseCurrecncy = gbp.Value.Id,
+                ConvertedCurrency = usd.Value.Id,
+                ExchangeRate = 1
+            };
+            await exchangeRateController.AddExchangeRate(exchangeRateToSend);
+
+            var exchangeRate = await exchangeRateController.GetExchangeRate(gbp.Value.Id, usd.Value.Id);
+            if (exchangeRate.Value != null && exchangeRate.Value == exchangeRateToSend)
             {
                 Assert.Pass();
             }
