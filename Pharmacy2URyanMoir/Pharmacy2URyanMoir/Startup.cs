@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Pharmacy2URyanMoir.Data;
 
 namespace Pharmacy2URyanMoir
 {
@@ -48,6 +49,9 @@ namespace Pharmacy2URyanMoir
                     name: "default",
                     pattern: "api/{controller}/{action}/{id?}");
             });
+
+            var context = new DbSetContext();
+            context.Database.EnsureCreated();
         }
     }
 }
