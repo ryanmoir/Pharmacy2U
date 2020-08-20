@@ -47,12 +47,30 @@ namespace Pharmacy2URyanMoir.Controllers
         // POST: api/Currencies
         [HttpPost]
         [ActionName("AddCurrency")]
-        public async Task<ActionResult<Currencies>> PostCurrencies(Currencies currencies)
+        public async Task<ActionResult<Currencies>> AddCurrency(Currencies currencies)
         {
             _context.Currencies.Add(currencies);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetCurrencies", new { id = currencies.Id }, currencies);
+        }
+
+        [HttpPost]
+        [ActionName("UpdateCurrency")]
+        public async Task<ActionResult<Currencies>> UpdateCurrency(Currencies currencies)
+        {
+            var task = _context.Currencies.FindAsync(currencies.Id);
+            if(task.IsCompletedSuccessfully && task.Result != null)
+            {
+                var currency = task.Result;
+                currency = currencies;
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetCurrencies", new { id = currency.Id }, currency);
+
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // DELETE: api/Currencies/5
