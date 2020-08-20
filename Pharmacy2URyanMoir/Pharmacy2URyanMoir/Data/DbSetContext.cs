@@ -3,7 +3,7 @@ using Pharmacy2URyanMoir.Models;
 
 namespace Pharmacy2URyanMoir.Data
 {
-    public class Pharmacy2UContext : DbContext
+    public class DbSetContext : DbContext
     {
         public DbSet<Currencies> Currencies { get; set; }
         public DbSet<ExchangeRates> ExchangeRates { get; set; }

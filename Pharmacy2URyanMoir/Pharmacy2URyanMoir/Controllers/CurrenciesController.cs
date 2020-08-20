@@ -12,11 +12,11 @@ namespace Pharmacy2URyanMoir.Controllers
     [ApiController]
     public class CurrenciesController : ControllerBase
     {
-        private readonly Pharmacy2UContext _context;
+        private readonly DbSetContext _context;
 
         public CurrenciesController()
         {
-            _context = new Pharmacy2UContext();
+            _context = new DbSetContext();
         }
 
         // GET: api/Currencies

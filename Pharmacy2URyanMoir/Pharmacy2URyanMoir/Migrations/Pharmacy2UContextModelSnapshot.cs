@@ -8,7 +8,7 @@ using Pharmacy2URyanMoir.Data;
 
 namespace Pharmacy2URyanMoir.Migrations
 {
-    [DbContext(typeof(Pharmacy2UContext))]
+    [DbContext(typeof(DbSetContext))]
     partial class Pharmacy2UContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

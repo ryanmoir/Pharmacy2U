@@ -13,7 +13,7 @@ namespace Pharmacy2URyanMoir.Controllers
         //https://localhost:44318/api/Utility/Clear
         public void ClearDb()
         {
-            using (var context = new Pharmacy2UContext())
+            using (var context = new DbSetContext())
             {
                 context.Currencies.RemoveRange(context.Currencies);
                 context.ExchangeRates.RemoveRange(context.ExchangeRates);
