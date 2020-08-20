@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,14 @@ namespace Pharmacy2URyanMoir.Controllers
                 return NotFound();
             }
 
+            var log = new Logs
+            {
+                ExchangeId = query.Id,
+                DateTime = DateTime.Now
+            };
+            _context.Logs.Add(log);
+            _context.SaveChanges();
+
             return query;
         }
 
@@ -80,6 +89,15 @@ namespace Pharmacy2URyanMoir.Controllers
             {
                 return NotFound();
             }
+
+            var log = new Logs
+            {
+                ExchangeId = query.Id,
+                DateTime = DateTime.Now
+            };
+            _context.Logs.Add(log);
+            _context.SaveChanges();
+
             return query;
         }
 
