@@ -99,5 +99,10 @@ namespace Pharmacy2UClient
                 Console.WriteLine("Was not able to parse inputs into DateTime");
             }
         }
+
+        public void FillDbWithDummyData()
+        {
+            Send("Utility/DummyData", out _);
+        }
     }
 }
