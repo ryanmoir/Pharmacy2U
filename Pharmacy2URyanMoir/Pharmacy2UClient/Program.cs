@@ -7,9 +7,30 @@ namespace Pharmacy2UClient
         static void Main(string[] args)
         {            
             Client client = new Client();
-            while (true)
+            string input = "";
+            while (input != "3")
             {
-                client.CurrencyExchangeRequest();
+                Console.WriteLine("Please enter option");
+                Console.WriteLine("1-convert currency");
+                Console.WriteLine("2-get logs");
+                Console.WriteLine("3-type exit to exit");
+                input = Console.ReadLine();
+                
+                if (int.TryParse(input, out var choice))
+                {
+                    if (choice == 1)
+                    {
+                        client.CurrencyExchangeRequest();
+                    }
+                    else if (choice == 2)
+                    {
+                        client.GetLogs();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input");
+                }
             }
         }
     }

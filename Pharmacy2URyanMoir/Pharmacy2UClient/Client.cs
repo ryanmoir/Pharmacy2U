@@ -16,7 +16,7 @@ namespace Pharmacy2UClient
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public bool Send(string pathRequest, out HttpResponseMessage response)
+        private bool Send(string pathRequest, out HttpResponseMessage response)
         {
             response = new HttpResponseMessage();
 
@@ -50,7 +50,7 @@ namespace Pharmacy2UClient
             }
         }
 
-        public void SendCurrencyExchangeRequest(string currency, int amount)
+        private void SendCurrencyExchangeRequest(string currency, int amount)
         {
             Console.WriteLine("Getting exchange rate data");
             Send("ExchangeRates/ExchangeRateStrings/baseCurrency=GBP/convertedCurrency=" + currency, out var response);
@@ -75,6 +75,29 @@ namespace Pharmacy2UClient
             Console.WriteLine(baseCurrency.Symbol + amount + " converted to " + ConversionCurrency.Name + " is " + ConversionCurrency.Symbol + convertedAmount);
 
             Console.WriteLine();
+        }
+
+        public void GetLogs()
+        {
+            Console.WriteLine("Please Enter start date for logs");
+            var startDate = Console.ReadLine();
+
+            Console.WriteLine("Please Enter end date for logs");
+            var endDate = Console.ReadLine();
+
+            if (DateTime.TryParse(startDate, out var startDateTime) && DateTime.TryParse(endDate, out var endDateTime))
+            {
+                string format = "O";
+                Console.WriteLine("Getting logs");
+                Console.WriteLine("Logs/DateLogs/startRange=" + startDateTime.ToString(format) + "/endRange=" + endDateTime.ToString(format));
+                Send("Logs/DateLogs/startRange=" + startDateTime.ToString(format) + "/endRange=" + endDateTime.ToString(format), out var response);
+                var jsonString = response.Content.ReadAsStringAsync().Result;
+                Console.WriteLine(jsonString);
+            }
+            else
+            {
+                Console.WriteLine("Was not able to parse inputs into DateTime");
+            }
         }
     }
 }
