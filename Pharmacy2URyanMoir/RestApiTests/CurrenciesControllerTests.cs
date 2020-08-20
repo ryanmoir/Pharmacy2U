@@ -11,7 +11,8 @@ namespace RestApiTests
     {
         CurrenciesController currenciesController = new CurrenciesController();
 
-        public CurrenciesControllerTests()
+        [SetUp]
+        public void Init()
         {
             ClearDb();
         }
