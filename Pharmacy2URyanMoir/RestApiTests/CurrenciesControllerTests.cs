@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace RestApiTests
 {
-    public class Tests
+    public class CurrenciesControllerTests
     {
-        CurrenciesController currenciesController = new CurrenciesController();
+        Pharmacy2URyanMoir.Controllers.CurrenciesController currenciesController = new Pharmacy2URyanMoir.Controllers.CurrenciesController();
 
-        public Tests()
+        public CurrenciesControllerTests()
         {
             var utilityController = new UtilityController();
             utilityController.ClearDb();
