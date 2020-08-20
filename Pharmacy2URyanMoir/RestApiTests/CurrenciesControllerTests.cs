@@ -42,19 +42,15 @@ namespace RestApiTests
         [Test]
         public async Task TestEditCurrency()
         {
-            var currencies = await currenciesController.GetCurrencies();    
-            if (currencies.Value.Count() == 0)
+            List<Currencies> currenciesToAdd = new List<Currencies>();
+            currenciesToAdd.Add(new Currencies()
             {
-                List<Currencies> currenciesToAdd = new List<Currencies>();
-                currenciesToAdd.Add(new Currencies()
-                {
-                    Exponent = 2,
-                    Symbol = "&",
-                    Name = "Test1"
-                });
-                await AddCurrency(currenciesToAdd);
-                currencies = await currenciesController.GetCurrencies();
-            }
+                Exponent = 2,
+                Symbol = "&",
+                Name = "Test1"
+            });
+            await AddCurrency(currenciesToAdd);
+            var currencies = await currenciesController.GetCurrencies();
 
             var currencyToEdit = currencies.Value.First();
             currencyToEdit.Name = currencyToEdit.Name + "Edited";
@@ -74,24 +70,20 @@ namespace RestApiTests
         [Test]
         public async Task TestDeleteCurrency()
         {
-            var currencies = await currenciesController.GetCurrencies();
-            if (currencies.Value.Count() == 0)
+            List<Currencies> currenciesToAdd = new List<Currencies>();
+            currenciesToAdd.Add(new Currencies()
             {
-                List<Currencies> currenciesToAdd = new List<Currencies>();
-                currenciesToAdd.Add(new Currencies()
-                {
-                    Exponent = 2,
-                    Symbol = "&",
-                    Name = "TestToDelete"
-                });
-                await AddCurrency(currenciesToAdd);
+                Exponent = 2,
+                Symbol = "&",
+                Name = "TestToDelete"
+            });
+            await AddCurrency(currenciesToAdd);
 
-                currencies = await currenciesController.GetCurrencies();
-            }
+            var currencies = await currenciesController.GetCurrencies();
 
             await currenciesController.DeleteCurrencies(currencies.Value.First().Id);
-            var test  = await currenciesController.GetCurrencies(currencies.Value.First().Id);
-            if(test.Value == null)
+            var test = await currenciesController.GetCurrencies(currencies.Value.First().Id);
+            if (test.Value == null)
             {
                 Assert.Pass();
             }
